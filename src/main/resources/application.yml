@@ -1,0 +1,73 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: elegant-essay
+  profiles:
+    active: sharding-database-tables
+  thymeleaf:
+    cache: true
+    mode: LEGACYHTML5
+#    content-type: text/html
+    check-template-location: true
+  swagger:
+    title: 文章分享
+    description: 文章服务Rest APIs
+    contact-name: 开发
+    license-url: http://www.apache.org/licenses/LICENSE-2.0.html
+    version: 1.0.0
+    base-package: com.elegant.essay.controller
+  data:
+    elasticsearch:
+      cluster-name: CollectorDBCluster
+      cluster-nodes: 127.0.0.1:9300
+      repositories:
+        enabled: true
+      path:
+        home: /data/elastic
+        transport:
+          tcp:
+            connect_timeout: 120s
+  rocketmq:
+    nameServer: 127.0.0.1:9876
+    essay-topic: essay-es-topic
+    trans-topic: TRANS-MQ-Topic
+    producer:
+      group: essay-producer-group
+      trans-group: TRANS-MQ-GROUP
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      batch-size: 4096
+      buffer-memory: 1024000
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: es-essay
+      enable-auto-commit: true
+      auto-commit-interval: 100
+  redis:
+#################redis基础配置#################
+   database: 0
+   host: 127.0.0.1
+   port: 6379
+   timeout: 3000
+mybatis:
+  type-aliases-package: com.elegant.essay.model
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration.map-underscore-to-camel-case: true
+pagehelper:
+    helperDialect: mysql
+    params: count=countSql
+    reasonable: false
+    supportMethodsArguments: true
+aliyun:
+  oss:
+    accessKeyId: LTAINkaIx2wulUxf
+    accessKeySecret: dwEmQBjd9WoyPRBFgBp7LCQm3P7tUH
+    bucketName: elegant-essay
+    endPoint: https://oss-cn-beijing.aliyuncs.com/
+    ossFilePath: https://elegant-essay.oss-cn-beijing.aliyuncs.com/
+jwt:
+  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
+  expires-time: 3600
+  static-path: /static/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/order/**,/address/**,/article/**

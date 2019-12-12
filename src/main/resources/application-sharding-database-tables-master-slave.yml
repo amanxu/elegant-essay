@@ -1,0 +1,74 @@
+#************分库分表-主从同步**********
+sharding:
+  jdbc:
+    datasource:
+      names: ds-master-0,ds-master-1,ds-master-0-slave,ds-master-1-slave
+      ds-master-0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_master_0
+        username: root
+        password: 111111
+      ds-master-0-slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_master_0_slave
+        username: root
+        password: 111111
+      ds-master-1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_master_1
+        username: root
+        password: 111111
+      ds-master-1-slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_master_1_slave
+        username: root
+        password: 111111
+    config:
+      sharding:
+        default-data-source-name: ds0
+        tables:
+          elegant_essay:
+            actual-data-nodes: ds$->{0..1}.elegant_essay_$->{0..1}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{user_id % 2}
+            table-strategy:
+              inline:
+                sharding-column: essay_id
+                algorithm-expression: elegant_essay_$->{essay_id % 2}
+            key-generator-column-name: essay_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostNameKeyGenerator
+        master-slave-rules:
+          ds0:
+            master-data-source-name: ds-master-0
+            slave-data-source-names: ds-master-0-slave
+          ds1:
+            master-data-source-name: ds-master-1
+            slave-data-source-names: ds-master-1-slave
+        props:
+          sql:
+            show: true
+          executor:
+            size: 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

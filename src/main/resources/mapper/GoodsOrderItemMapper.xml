@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.GoodsOrderItemMapper">
+    <resultMap id="BaseResultMap" type="com.elegant.essay.model.GoodsOrderItem">
+        <id column="order_item_id" property="orderItemId" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_icon" property="goodsIcon" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="trade_status" property="tradeStatus" jdbcType="INTEGER"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    order_item_id, goods_id, goods_name, goods_icon, price, trade_status, quantity, order_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from goods_order_item
+        where order_item_id = #{orderItemId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_order_item
+    where order_item_id = #{orderItemId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.elegant.essay.model.GoodsOrderItem" useGeneratedKeys="true" keyProperty="orderItemId">
+    insert into goods_order_item (goods_id, goods_name,
+      goods_icon, price, trade_status, 
+      quantity, order_id)
+    values (#{goodsId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR},
+      #{goodsIcon,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{tradeStatus,jdbcType=INTEGER}, 
+      #{quantity,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.elegant.essay.model.GoodsOrderItem">
+        insert into goods_order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderItemId != null">
+                order_item_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsIcon != null">
+                goods_icon,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="tradeStatus != null">
+                trade_status,
+            </if>
+            <if test="quantity != null">
+                quantity,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderItemId != null">
+                #{orderItemId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIcon != null">
+                #{goodsIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeStatus != null">
+                #{tradeStatus,jdbcType=INTEGER},
+            </if>
+            <if test="quantity != null">
+                #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elegant.essay.model.GoodsOrderItem">
+        update goods_order_item
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIcon != null">
+                goods_icon = #{goodsIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeStatus != null">
+                trade_status = #{tradeStatus,jdbcType=INTEGER},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where order_item_id = #{orderItemId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elegant.essay.model.GoodsOrderItem">
+    update goods_order_item
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_icon = #{goodsIcon,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      trade_status = #{tradeStatus,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=BIGINT}
+    where order_item_id = #{orderItemId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.ArtisanGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.elegant.essay.model.ArtisanGoods">
+        <id column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_icon" property="goodsIcon" jdbcType="VARCHAR"/>
+        <result column="goods_brief" property="goodsBrief" jdbcType="VARCHAR"/>
+        <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="promotion_price" property="promotionPrice" jdbcType="DECIMAL"/>
+        <result column="category" property="category" jdbcType="INTEGER"/>
+        <result column="sales_volume" property="salesVolume" jdbcType="INTEGER"/>
+        <result column="page_view" property="pageView" jdbcType="INTEGER"/>
+        <result column="stocks" property="stocks" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="deleted" property="deleted" jdbcType="INTEGER"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    goods_id, goods_name, goods_icon, goods_brief, goods_desc, price, promotion_price, 
+    category, sales_volume, page_view, stocks, sort, deleted, start_time, end_time, create_time, 
+    update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from artisan_goods
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from artisan_goods
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.elegant.essay.model.ArtisanGoods">
+    insert into artisan_goods (goods_id, goods_name, goods_icon, 
+      goods_brief, goods_desc, price, 
+      promotion_price, category, sales_volume, 
+      page_view, stocks, sort, 
+      deleted, start_time, end_time, 
+      create_time, update_time)
+    values (#{goodsId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{goodsIcon,jdbcType=VARCHAR}, 
+      #{goodsBrief,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{promotionPrice,jdbcType=DECIMAL}, #{category,jdbcType=INTEGER}, #{salesVolume,jdbcType=INTEGER}, 
+      #{pageView,jdbcType=INTEGER}, #{stocks,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.elegant.essay.model.ArtisanGoods">
+        insert into artisan_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsIcon != null">
+                goods_icon,
+            </if>
+            <if test="goodsBrief != null">
+                goods_brief,
+            </if>
+            <if test="goodsDesc != null">
+                goods_desc,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="promotionPrice != null">
+                promotion_price,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="salesVolume != null">
+                sales_volume,
+            </if>
+            <if test="pageView != null">
+                page_view,
+            </if>
+            <if test="stocks != null">
+                stocks,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIcon != null">
+                #{goodsIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBrief != null">
+                #{goodsBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsDesc != null">
+                #{goodsDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="promotionPrice != null">
+                #{promotionPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=INTEGER},
+            </if>
+            <if test="salesVolume != null">
+                #{salesVolume,jdbcType=INTEGER},
+            </if>
+            <if test="pageView != null">
+                #{pageView,jdbcType=INTEGER},
+            </if>
+            <if test="stocks != null">
+                #{stocks,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elegant.essay.model.ArtisanGoods">
+        update artisan_goods
+        <set>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIcon != null">
+                goods_icon = #{goodsIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBrief != null">
+                goods_brief = #{goodsBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsDesc != null">
+                goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="promotionPrice != null">
+                promotion_price = #{promotionPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=INTEGER},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume = #{salesVolume,jdbcType=INTEGER},
+            </if>
+            <if test="pageView != null">
+                page_view = #{pageView,jdbcType=INTEGER},
+            </if>
+            <if test="stocks != null">
+                stocks = #{stocks,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elegant.essay.model.ArtisanGoods">
+    update artisan_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_icon = #{goodsIcon,jdbcType=VARCHAR},
+      goods_brief = #{goodsBrief,jdbcType=VARCHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      promotion_price = #{promotionPrice,jdbcType=DECIMAL},
+      category = #{category,jdbcType=INTEGER},
+      sales_volume = #{salesVolume,jdbcType=INTEGER},
+      page_view = #{pageView,jdbcType=INTEGER},
+      stocks = #{stocks,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+  </update>
+</mapper>

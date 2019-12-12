@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.ArtisanAreaMapper">
+    <resultMap id="BaseResultMap" type="com.elegant.essay.model.ArtisanArea">
+        <id column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="area_level" property="areaLevel" jdbcType="INTEGER"/>
+        <result column="area_type" property="areaType" jdbcType="INTEGER"/>
+        <result column="deleted" property="deleted" jdbcType="INTEGER"/>
+        <result column="area_desc" property="areaDesc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    area_id, area_name, parent_id, area_level, area_type, deleted, area_desc, create_time, 
+    update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from artisan_area
+        where area_id = #{areaId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from artisan_area
+    where area_id = #{areaId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.elegant.essay.model.ArtisanArea">
+    insert into artisan_area (area_id, area_name, parent_id, 
+      area_level, area_type, deleted, 
+      area_desc, create_time, update_time
+      )
+    values (#{areaId,jdbcType=BIGINT}, #{areaName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{areaLevel,jdbcType=INTEGER}, #{areaType,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}, 
+      #{areaDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.elegant.essay.model.ArtisanArea">
+        insert into artisan_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="areaName != null">
+                area_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="areaLevel != null">
+                area_level,
+            </if>
+            <if test="areaType != null">
+                area_type,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="areaDesc != null">
+                area_desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                #{areaId,jdbcType=BIGINT},
+            </if>
+            <if test="areaName != null">
+                #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="areaLevel != null">
+                #{areaLevel,jdbcType=INTEGER},
+            </if>
+            <if test="areaType != null">
+                #{areaType,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="areaDesc != null">
+                #{areaDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elegant.essay.model.ArtisanArea">
+        update artisan_area
+        <set>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="areaLevel != null">
+                area_level = #{areaLevel,jdbcType=INTEGER},
+            </if>
+            <if test="areaType != null">
+                area_type = #{areaType,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="areaDesc != null">
+                area_desc = #{areaDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where area_id = #{areaId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elegant.essay.model.ArtisanArea">
+    update artisan_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      area_level = #{areaLevel,jdbcType=INTEGER},
+      area_type = #{areaType,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      area_desc = #{areaDesc,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where area_id = #{areaId,jdbcType=BIGINT}
+  </update>
+</mapper>

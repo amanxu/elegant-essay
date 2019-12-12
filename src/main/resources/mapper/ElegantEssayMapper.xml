@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.ElegantEssayMapper">
+    <resultMap id="BaseResultMap" type="com.elegant.essay.model.ElegantEssay">
+        <id column="essay_id" property="essayId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="allow_comment" property="allowComment" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="deleted" property="deleted" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    essay_id, title, publish_time, summary, allow_comment, sort, content, img_url, status, 
+    deleted, user_id, category_id, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from elegant_essay
+        where essay_id = #{essayId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from elegant_essay
+    where essay_id = #{essayId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.elegant.essay.model.ElegantEssay" useGeneratedKeys="true"
+            keyProperty="essayId">
+    insert into elegant_essay (title, publish_time,
+      summary, allow_comment, sort, 
+      content, img_url, status, 
+      deleted, user_id,category_id, create_time,
+      update_time)
+    values (#{title,jdbcType=VARCHAR}, #{publishTime,jdbcType=TIMESTAMP},
+      #{summary,jdbcType=VARCHAR}, #{allowComment,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT},#{categoryId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.elegant.essay.model.ElegantEssay">
+        insert into elegant_essay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="essayId != null">
+                essay_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="allowComment != null">
+                allow_comment,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="essayId != null">
+                #{essayId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="allowComment != null">
+                #{allowComment,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elegant.essay.model.ElegantEssay">
+        update elegant_essay
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="allowComment != null">
+                allow_comment = #{allowComment,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where essay_id = #{essayId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elegant.essay.model.ElegantEssay">
+    update elegant_essay
+    set title = #{title,jdbcType=VARCHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      summary = #{summary,jdbcType=VARCHAR},
+      allow_comment = #{allowComment,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where essay_id = #{essayId,jdbcType=BIGINT}
+  </update>
+
+    <select id="essayCount" resultType="java.lang.Long">
+        SELECT
+          COUNT(essay_id)
+        FROM elegant_essay
+    </select>
+
+    <insert id="batchInsertEssay" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="essayId">
+        INSERT INTO elegant_essay (title, publish_time,
+        summary, allow_comment, sort,
+        content, img_url, status,
+        deleted, user_id,category_id, create_time,
+        update_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.title,jdbcType=VARCHAR}, #{item.publishTime,jdbcType=TIMESTAMP},
+            #{item.summary,jdbcType=VARCHAR}, #{item.allowComment,jdbcType=INTEGER}, #{item.sort,jdbcType=INTEGER},
+            #{item.content,jdbcType=VARCHAR}, #{item.imgUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR},
+            #{item.deleted,jdbcType=INTEGER}, #{item.userId,jdbcType=BIGINT},#{item.categoryId,jdbcType=BIGINT},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+</mapper>

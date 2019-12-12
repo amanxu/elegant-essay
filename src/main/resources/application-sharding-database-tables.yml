@@ -1,0 +1,98 @@
+# 使用自增主键key-generator-column-name时,插入SQL中不能包含自增的列，否则抛异常
+sharding:
+  jdbc:
+    datasource:
+      names: ds0,ds1
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_sharding_s?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+        username: root
+        password: 111111
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_sharding_x?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+        username: root
+        password: 111111
+    config:
+      sharding:
+        default-data-source-name: ds0
+        tables:
+          elegant_user:
+            actual-data-nodes: ds$->{0..1}.elegant_user_$->{0..3}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{(int)Math.floor(user_id % 8 / 4)}
+            table-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: elegant_user_$->{user_id % 4}
+            key-generator-column-name: user_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+          shipping_address:
+            actual-data-nodes: ds$->{0..1}.shipping_address_$->{0..3}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{user_id % 2}
+            table-strategy:
+              inline:
+                sharding-column: address_id
+                algorithm-expression: shipping_address_$->{address_id % 4}
+            key-generator-column-name: address_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+          artisan_goods:
+            actual-data-nodes: ds$->{0..1}.artisan_goods$->{0..3}
+            database-strategy:
+              inline:
+                sharding-column: goods_id
+                algorithm-expression: ds$->{goods_id % 8 / 4}
+            table-strategy:
+              inline:
+                sharding-column: goods_id
+                algorithm-expression: artisan_goods$->{goods_id % 4}
+            key-generator-column-name: goods_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+          elegant_essay:
+            actual-data-nodes: ds$->{0..1}.elegant_essay_$->{0..1}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{user_id % 2}
+            table-strategy:
+              inline:
+                sharding-column: essay_id
+                algorithm-expression: elegant_essay_$->{essay_id % 2}
+            key-generator-column-name: essay_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+          goods_order:
+            actual-data-nodes: ds$->{0..1}.goods_order_$->{0..3}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{user_id % 2}
+            table-strategy:
+              inline:
+                sharding-column: order_id
+                algorithm-expression: goods_order_$->{order_id % 4}
+            key-generator-column-name: order_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+          goods_order_item:
+            actual-data-nodes: ds$->{0..1}.goods_order_item_$->{0..3}
+            database-strategy:
+              hint:
+                algorithm-class-name: com.elegant.essay.sharding.config.OrderMasterHintShardingAlgorithm
+            table-strategy:
+              inline:
+                sharding-column: order_id
+                algorithm-expression: goods_order_item_$->{order_id % 4}
+            key-generator-column-name: order_item_id
+            key-generator-class-name: com.elegant.essay.sharding.config.HostIpKeyGenerator
+      props:
+        sql:
+          show: false
+        executor:
+          size: 6
+

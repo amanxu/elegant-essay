@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.EssaySelfMapper">
+    <select id="findByFilter" parameterType="com.elegant.essay.model.dto.EssayQueryDto"
+            resultType="com.elegant.essay.model.vo.EssayVo">
+        SELECT
+        ee.essay_id,
+        ee.title,
+        ee.summary,
+        ee.content,
+        ee.img_url,
+        ee.status,
+        ee.sort,
+        ee.allow_comment,
+        ee.publish_time,
+        ee.user_id
+        FROM
+        elegant_essay ee
+        <where>
+            <if test="title != null and title !=''">
+                ee.title LIKE CONCAT('%',#{title},'%')
+            </if>
+            <if test="userId != null and userId !=''">
+                AND ee.user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY ee.essay_id DESC
+    </select>
+</mapper>

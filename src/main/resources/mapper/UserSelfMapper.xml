@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.UserSelfMapper">
+
+    <select id="pageList" resultType="com.elegant.essay.model.vo.UserVo">
+        select
+        u.user_id,
+        u.user_name,
+        u.password,
+        u.real_name,
+        u.phone,
+        u.email,
+        u.user_type,
+        u.deleted
+        from elegant_user u
+        <where>
+            <if test="userName !=null and userName !=''">
+                u.real_name LIKE CONCAT('%',#{userName},'%')
+            </if>
+        </where>
+        ORDER BY u.user_id DESC
+    </select>
+
+    <select id="findUsersByRealName" parameterType="java.lang.String" resultType="com.elegant.essay.model.vo.UserVo">
+        select
+        u.user_id,
+        u.user_name,
+        u.password,
+        u.real_name,
+        u.phone,
+        u.email,
+        u.user_type,
+        u.deleted
+        from elegant_user u
+        <where>
+            <if test="realName !=null and realName !=''">
+                u.real_name LIKE CONCAT('%',#{realName},'%')
+            </if>
+        </where>
+        ORDER BY u.user_id DESC
+    </select>
+
+    <select id="findUserByAccount" parameterType="java.lang.String" resultType="com.elegant.essay.model.ElegantUser">
+        select
+        u.user_id,
+        u.user_name,
+        u.password,
+        u.real_name,
+        u.phone,
+        u.email,
+        u.user_type,
+        u.deleted
+        from elegant_user u
+        WHERE
+        u.user_name =  #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="batchUsersByIds" parameterType="java.util.Set" resultType="com.elegant.essay.model.ElegantUser">
+        select
+        u.user_id,
+        u.user_name,
+        u.password,
+        u.real_name,
+        u.phone,
+        u.email,
+        u.user_type,
+        u.deleted
+        from elegant_user u
+        WHERE
+        u.user_id IN
+        <foreach collection="userIds" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.GoodsOrderSelfMapper">
+
+    <select id="findOrdersBriefByUserId" parameterType="java.lang.Long"
+            resultType="com.elegant.essay.model.vo.GoodsOrderBriefVO">
+        SELECT
+            order_id,
+            pay_status,
+            order_status
+        FROM
+            goods_order
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <select id="findOrderDetailById" parameterType="com.elegant.essay.model.dto.UserQuery"
+            resultType="com.elegant.essay.model.vo.GoodsOrderDetailVO">
+        SELECT
+            order_id,
+            price,
+            trade_num,
+            pay_way,
+            create_time,
+            pay_time,
+            consignment_time,
+            complete_time,
+            pay_status,
+            order_status,
+            user_id
+        FROM
+            goods_order
+        WHERE
+            order_id = #{id} and user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.ShippingAddressMapper">
+    <resultMap id="BaseResultMap" type="com.elegant.essay.model.ShippingAddress">
+        <id column="address_id" property="addressId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <result column="street_id" property="streetId" jdbcType="BIGINT"/>
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="address_desc" property="addressDesc" jdbcType="VARCHAR"/>
+        <result column="cellphone" property="cellphone" jdbcType="VARCHAR"/>
+        <result column="consignee_name" property="consigneeName" jdbcType="VARCHAR"/>
+        <result column="is_default" property="isDefault" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    address_id, user_id, area_id, street_id, zip_code, address_desc, cellphone, consignee_name, 
+    is_default, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shipping_address
+        where address_id = #{addressId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from shipping_address
+    where address_id = #{addressId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.elegant.essay.model.ShippingAddress">
+    insert into shipping_address (user_id, area_id,
+      street_id, zip_code, address_desc, 
+      cellphone, consignee_name, is_default, 
+      create_time, update_time)
+    values (#{userId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT},
+      #{streetId,jdbcType=BIGINT}, #{zipCode,jdbcType=VARCHAR}, #{addressDesc,jdbcType=VARCHAR}, 
+      #{cellphone,jdbcType=VARCHAR}, #{consigneeName,jdbcType=VARCHAR}, #{isDefault,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.elegant.essay.model.ShippingAddress">
+        insert into shipping_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="streetId != null">
+                street_id,
+            </if>
+            <if test="zipCode != null">
+                zip_code,
+            </if>
+            <if test="addressDesc != null">
+                address_desc,
+            </if>
+            <if test="cellphone != null">
+                cellphone,
+            </if>
+            <if test="consigneeName != null">
+                consignee_name,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">
+                #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=BIGINT},
+            </if>
+            <if test="streetId != null">
+                #{streetId,jdbcType=BIGINT},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDesc != null">
+                #{addressDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="cellphone != null">
+                #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="consigneeName != null">
+                #{consigneeName,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elegant.essay.model.ShippingAddress">
+        update shipping_address
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=BIGINT},
+            </if>
+            <if test="streetId != null">
+                street_id = #{streetId,jdbcType=BIGINT},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDesc != null">
+                address_desc = #{addressDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="consigneeName != null">
+                consignee_name = #{consigneeName,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where address_id = #{addressId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elegant.essay.model.ShippingAddress">
+    update shipping_address
+    set user_id = #{userId,jdbcType=BIGINT},
+      area_id = #{areaId,jdbcType=BIGINT},
+      street_id = #{streetId,jdbcType=BIGINT},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      address_desc = #{addressDesc,jdbcType=VARCHAR},
+      cellphone = #{cellphone,jdbcType=VARCHAR},
+      consignee_name = #{consigneeName,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where address_id = #{addressId,jdbcType=BIGINT}
+  </update>
+</mapper>

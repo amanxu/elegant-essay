@@ -1,0 +1,76 @@
+## sharding-jdbc直连MySQL 主从模式
+sharding:
+  jdbc:
+    datasource:
+      names: ds_master,ds_slave_0,ds_slave_1
+      ds_master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/artisan_master?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+        username: root
+        password: 111111
+        filters: wall,stat,config
+        initial-size: 1
+        max-active: 3
+        min-idle: 1
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: select 'x'
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+      ds_slave_0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/artisan_slave_0?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+        username: root
+        password: 111111
+        filters: wall,stat,config
+        initial-size: 1
+        max-active: 3
+        min-idle: 1
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: select 'x'
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+      ds_slave_1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/artisan_slave_1?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+        username: root
+        password: 111111
+        filters: wall,stat,config
+        initial-size: 1
+        max-active: 3
+        min-idle: 1
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: select 'x'
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+    config:
+      masterslave:
+        load-balance-algorithm-type: round_robin
+        name: ds_ms
+        master-data-source-name: ds_master
+        slave-data-source-names: ds_slave_0,ds_slave_1
+        props:
+          sql:
+            show: true
+          executor:
+            size: 8
+
+
+

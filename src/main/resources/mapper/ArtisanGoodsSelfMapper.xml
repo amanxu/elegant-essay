@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elegant.essay.mapper.ArtisanGoodsSelfMapper">
+
+    <select id="batchSelectGoodsByIds" parameterType="java.util.List"
+            resultType="com.elegant.essay.model.ArtisanGoods">
+        SELECT
+        goods_id,
+        goods_name,
+        goods_icon,
+        promotion_price,
+        stocks
+        FROM
+        artisan_goods
+        WHERE
+        goods_id IN
+        <foreach collection="goodsIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="batchInsertGoods" parameterType="java.util.List" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into artisan_goods (goods_id, goods_name, goods_icon,
+        goods_brief, goods_desc, price,
+        promotion_price, deleted, start_time, end_time,
+        create_time, update_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.goodsId,jdbcType=BIGINT}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsIcon,jdbcType=VARCHAR},
+            #{item.goodsBrief,jdbcType=VARCHAR}, #{item.goodsDesc,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL},
+            #{item.promotionPrice,jdbcType=DECIMAL},
+            #{item.deleted,jdbcType=INTEGER}, #{item.startTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdateGoodsStock" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE artisan_goods
+            <set>
+                stocks=#{item.stocks}
+            </set>
+            <where>
+                goods_id = #{item.goodsId}
+            </where>
+        </foreach>
+    </update>
+
+</mapper>

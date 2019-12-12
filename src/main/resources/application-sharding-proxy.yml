@@ -1,0 +1,8 @@
+#sharding proxy 代理模式配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/master_slave_db?useServerPrepStmts=true&cachePrepStmts=true
+    username: root
+    password: root
